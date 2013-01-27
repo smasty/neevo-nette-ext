@@ -1,0 +1,21 @@
+{
+	"name": "smasty/neevo-nette-extension",
+	"description": "Neevo extension for Nette Framework",
+	"keywords": ["database", "dbal", "nette", "neevo"],
+	"homepage": "http://github.com/smasty/neevo-nette-extension",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Smasty",
+			"homepage": "http://smasty.net"
+		}
+	],
+	"require": {
+		"php": ">=5.3.0",
+		"smasty/neevo": ">=2.3.0-beta",
+		"nette/nette": ">=2.0"
+	},
+	"autoload": {
+		"psr-0": {"Neevo\\Nette": "./"}
+	}
+}

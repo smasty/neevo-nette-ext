@@ -17,12 +17,12 @@
 		<?php printf('%0.3f', $ticket['time'] * 1000);
 		if(isset($ticket['explain'])): ?>
 			<br/>
-			<a href='#' class='nette-toggler' rel='#nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-" . ++$i ?>'>explain&nbsp;&#x25ba;</a>
+			<a href='#' class='nette-toggle-collapsed' data-ref='#nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-" . ++$i ?>'>explain</a>
 		<?php endif ?>
 	</td>
 	<td class="sql">
 		<?php echo Neevo\Manager::highlightSql($ticket['sql']);
-		echo Nette\Diagnostics\Helpers::editorLink($ticket['source'][0], $ticket['source'][1]);
+		if($ticket['source'] !== null) echo Nette\Diagnostics\Helpers::editorLink($ticket['source'][0], $ticket['source'][1]);
 		if(isset($ticket['explain'])): ?>
 			<table id="nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-$i" ?>" class="nette-collapsed">
 				<tr>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Neevo - Tiny database layer for PHP. (http://neevo.smasty.net)
+ * Neevo extension for Nette Framework.
  *
  * This source file is subject to the MIT license that is bundled
  * with this package in the file license.txt.
@@ -20,6 +20,7 @@ use Neevo\Result;
 use Nette\Diagnostics\BlueScreen;
 use Nette\Diagnostics\Helpers;
 use Nette\Diagnostics\IBarPanel;
+use Nette\Reflection\ClassType;
 
 
 /**
@@ -101,11 +102,13 @@ class DebugPanel implements ObserverInterface, IBarPanel {
 	 */
 	public function updateStatus(ObservableInterface $subject, $event){
 		$source = null;
-		$path = realpath(__DIR__ . '/../../');
-		foreach(debug_backtrace(false) as $t){
-			if(isset($t['file']) && strpos($t['file'], $path) !== 0){
-				$source = array($t['file'], (int) $t['line']);
-				break;
+		if(class_exists('Neevo\Manager')){
+			$path = dirname(ClassType::from('Neevo\Manager')->getFileName());
+			foreach(debug_backtrace(false) as $t){
+				if(isset($t['file']) && strpos($t['file'], $path) !== 0){
+					$source = array($t['file'], (int) $t['line']);
+					break;
+				}
 			}
 		}
 
@@ -148,8 +151,7 @@ class DebugPanel implements ObserverInterface, IBarPanel {
 		return array(
 			'tab' => 'SQL',
 			'panel' => Manager::highlightSql($e->getSql())
-			. '<p><b>File:</b> ' . Helpers::editorLink($file, $line)
-			. ' &nbsp; <b>Line:</b> ' . ($line ? : 'n/a') . '</p>'
+			. '<p><b>File:</b> ' . Helpers::editorLink($file, $line) . '</p>'
 			. ($line ? BlueScreen::highlightFile($file, $line) : '')
 			. 'Neevo v' . Manager::VERSION
 		);
