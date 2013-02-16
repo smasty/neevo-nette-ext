@@ -12,6 +12,16 @@ Only Nette Framework 2.0 and above PHP 5.3 packages are supported.
 Instructions
 ------------
 
+0.  Add the extension to your Composer configuration:
+	
+	```js
+	{
+		"require": {
+			"smasty/neevo-nette-ext": "1.*"
+		}
+	}
+	```
+
 1.  Register the Neevo compiler extension in your application bootstrap
     (e.g. `app/bootstrap.php`):
 
@@ -25,10 +35,12 @@ Instructions
 2.  Add a new section `neevo` to your config file (e.g. `app/config/config.neon`)
     and place there your Neevo configuration:
 
+	```yaml
 		neevo:
 			driver: MySQLi
 			username: root
 			password: ****
 			database: my_database
+	```
 
 3.  There is no step three.
