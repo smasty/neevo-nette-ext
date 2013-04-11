@@ -21,6 +21,9 @@ use Nette\Config\CompilerExtension;
 class Extension extends CompilerExtension {
 
 
+	const VERSION = '1.2';
+
+
 	public function loadConfiguration(){
 		$container = $this->getContainerBuilder();
 		$config = $this->getConfig();
