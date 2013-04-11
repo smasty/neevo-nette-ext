@@ -151,7 +151,7 @@ class DebugPanel implements ObserverInterface, IBarPanel {
 		return array(
 			'tab' => 'SQL',
 			'panel' => Manager::highlightSql($e->getSql())
-			. '<p><b>File:</b> ' . Helpers::editorLink($file, $line) . '</p>'
+			. '<p><b>File:</b> ' . Helpers::editorLink($file, $line) . " &nbsp; <b>Line:</b> $line</p>"
 			. ($line ? BlueScreen::highlightFile($file, $line) : '')
 			. 'Neevo v' . Manager::VERSION
 		);
