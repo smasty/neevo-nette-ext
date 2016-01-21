@@ -22,7 +22,7 @@
 	</td>
 	<td class="sql">
 		<?php echo Neevo\Manager::highlightSql($ticket['sql']);
-		if(null !== $s = $ticket['source']) echo '<span>' . Nette\Diagnostics\Helpers::editorLink($s[0], $s[1]) . ":$s[1]</span>";
+		if(null !== $s = $ticket['source']) echo '<span>' . Tracy\Helpers::editorLink($s[0], $s[1]) . ":$s[1]</span>";
 		if(isset($ticket['explain'])): ?>
 			<table id="nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-$i" ?>" class="nette-collapsed">
 				<tr>

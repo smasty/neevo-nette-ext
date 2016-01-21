@@ -11,45 +11,47 @@
 
 namespace Neevo\Nette;
 
-use Nette\Config\CompilerExtension;
-
+use Nette\DI\CompilerExtension;
 
 /**
  * Neevo extension for Nette Framework.
  * Creates services `manager`, `panel` and `cache`.
  */
-class Extension extends CompilerExtension {
+class Extension extends CompilerExtension
+{
 
 
-	const VERSION = '1.2.1';
+    const VERSION = '1.2.1';
 
 
-	public function loadConfiguration(){
-		$container = $this->getContainerBuilder();
-		$config = $this->getConfig();
+    public function loadConfiguration()
+    {
+        $container = $this->getContainerBuilder();
+        $config = $this->getConfig();
 
-		$panelEvents = $container->parameters['productionMode']
-			? DebugPanel::EXCEPTION
-			: DebugPanel::QUERY + DebugPanel::EXCEPTION;
+        $panelEvents = $container->parameters['productionMode']
+            ? DebugPanel::EXCEPTION
+            : DebugPanel::QUERY + DebugPanel::EXCEPTION;
 
-		// Cache
-		$cache = $container->addDefinition($this->prefix($c = 'cache'))
-			->setClass('Neevo\Nette\CacheAdapter', array(ucfirst($this->prefix($c))));
+        // Cache
+        $cache = $container->addDefinition($this->prefix($c = 'cache'))
+            ->setClass('Neevo\Nette\CacheAdapter', array(ucfirst($this->prefix($c))));
 
-		// Manager
-		$manager = $container->addDefinition($this->prefix('manager'))
-			->setClass('Neevo\Manager', array($config, $this->prefix('@cache')));
+        // Manager
+        $manager = $container->addDefinition($this->prefix('manager'))
+            ->setClass('Neevo\Manager', array($config, $this->prefix('@cache')));
 
-		// Panel
-		$panelName = 'Neevo-Nette-DebugPanel-' . ucfirst($this->name);
-		$panel = $container->addDefinition($this->prefix('panel'))
-			->setClass('Neevo\Nette\DebugPanel', array(ucfirst($this->name)))
-			->addSetup('$service->setExplain(?)', !$container->parameters['productionMode'])
-			->addSetup('Nette\Diagnostics\Debugger::$bar->addPanel(?, ?)', array('@self', $panelName))
-			->addSetup('Nette\Diagnostics\Debugger::$blueScreen->addPanel(?)', array(array('@self', 'renderException')));
+        // Panel
+        $panelName = 'Neevo-Nette-DebugPanel-' . ucfirst($this->name);
+        $panel = $container->addDefinition($this->prefix('panel'))
+            ->setClass('Neevo\Nette\DebugPanel', array(ucfirst($this->name)))
+            ->addSetup('$service->setExplain(?)', array(!$container->parameters['productionMode']))
+            ->addSetup('Tracy\Debugger::getBar()->addPanel(?, ?)', array('@self', $panelName))
+            ->addSetup(
+                'Tracy\Debugger::getBlueScreen()->addPanel(?)',
+                array(array('@self', 'renderException'))
+            );
 
-		$manager->addSetup('$service->attachObserver(?, ?)', array($panel, $panelEvents));
-	}
-
-
+        $manager->addSetup('$service->attachObserver(?, ?)', array($panel, $panelEvents));
+    }
 }

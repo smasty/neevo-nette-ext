@@ -15,42 +15,44 @@ use Neevo\Cache\StorageInterface;
 use Nette\Caching\Cache;
 use Nette\Caching\IStorage;
 
-
 /**
  * Cache adapter for Nette Framework cache storage system.
  * @author Smasty
  */
-class CacheAdapter implements StorageInterface {
+class CacheAdapter implements StorageInterface
+{
 
 
-	/** @var Cache */
-	private $cache;
+    /** @var Cache */
+    private $cache;
 
 
-	/**
-	 * Creates the cache adapter.
-	 * @param string $cacheKey Generated from service name
-	 * @param IStorage $storage
-	 */
-	public function __construct($cacheKey, IStorage $storage){
-		$this->cache = new Cache($storage, $cacheKey);
-	}
+    /**
+     * Creates the cache adapter.
+     * @param string $cacheKey Generated from service name
+     * @param IStorage $storage
+     */
+    public function __construct($cacheKey, IStorage $storage)
+    {
+        $this->cache = new Cache($storage, $cacheKey);
+    }
 
 
-	public function fetch($key){
-		return $this->cache[$key];
-	}
+    public function fetch($key)
+    {
+        return $this->cache->load($key);
+    }
 
 
-	public function store($key, $value){
-		$this->cache[$key] = $value;
-	}
+    public function store($key, $value)
+    {
+        $this->cache->save($key, $value);
+    }
 
 
-	public function flush(){
-		$this->cache->clean();
-		return true;
-	}
-
-
+    public function flush()
+    {
+        $this->cache->clean();
+        return true;
+    }
 }
