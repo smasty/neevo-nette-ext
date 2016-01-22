@@ -11,20 +11,20 @@
 	<th>SQL</th>
 	<th>Rows</th>
 </tr>
-<?php $i = 0; foreach($tickets as $ticket): ?>
+<?php foreach($tickets as $ticket): ?>
 <tr>
 	<td>
 		<?php printf('%0.3f', $ticket['time'] * 1000);
 		if(isset($ticket['explain'])): ?>
 			<br/>
-			<a href="#" rel="#nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-" . ++$i ?>">explain <abbr>&#x25ba;</abbr></a>
+			<a href="#" class="tracy-toggle tracy-collapsed"  data-tracy-ref="^tr .nette-Neevo-Nette-DebugPanel-explain">explain</a>
 		<?php endif ?>
 	</td>
 	<td class="sql">
 		<?php echo Neevo\Manager::highlightSql($ticket['sql']);
 		if(null !== $s = $ticket['source']) echo '<span>' . Tracy\Helpers::editorLink($s[0], $s[1]) . ":$s[1]</span>";
 		if(isset($ticket['explain'])): ?>
-			<table id="nette-Neevo-Nette-DebugPanel-<?php echo "$name-row-$i" ?>" class="nette-collapsed">
+			<table class="tracy-collapsed nette-Neevo-Nette-DebugPanel-explain">
 				<tr>
 					<th><?php echo implode('</th><th>', array_keys($ticket['explain'][0])) ?></th>
 				</tr>
