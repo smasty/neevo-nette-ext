@@ -21,7 +21,7 @@ class Extension extends CompilerExtension
 {
 
 
-    const VERSION = '1.2.4';
+    const VERSION = '1.2.5';
 
 
     public function loadConfiguration()

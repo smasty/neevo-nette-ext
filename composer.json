@@ -15,7 +15,7 @@
 		"smasty/neevo": ">=2.3.1",
 		"nette/di": "~2.3",
 		"nette/caching": "~2.3",
-		"tracy/tracy": "~2.3",
+		"tracy/tracy": "~2.3"
 	},
 	"autoload": {
 		"psr-0": {"Neevo\\Nette": "./"}
