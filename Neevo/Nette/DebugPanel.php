@@ -20,7 +20,6 @@ use Neevo\Result;
 use Tracy\BlueScreen;
 use Tracy\Helpers;
 use Tracy\IBarPanel;
-use Nette\Reflection\ClassType;
 
 /**
  * Debug panel informing about performed queries.
@@ -111,7 +110,8 @@ class DebugPanel implements ObserverInterface, IBarPanel
     {
         $source = null;
         if (class_exists('Neevo\Manager')) {
-            $path = dirname(ClassType::from('Neevo\Manager')->getFileName());
+            $class = new \ReflectionClass('Neevo\Manager');
+            $path = dirname($class->getFileName());
             foreach (debug_backtrace(false) as $t) {
                 if (isset($t['file']) && strpos($t['file'], $path) !== 0) {
                     $source = array($t['file'], (int) $t['line']);

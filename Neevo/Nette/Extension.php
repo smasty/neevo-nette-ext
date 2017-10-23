@@ -21,7 +21,7 @@ class Extension extends CompilerExtension
 {
 
 
-    const VERSION = '1.2.3';
+    const VERSION = '1.2.4';
 
 
     public function loadConfiguration()
@@ -35,16 +35,19 @@ class Extension extends CompilerExtension
 
         // Cache
         $cache = $container->addDefinition($this->prefix($c = 'cache'))
-            ->setClass('Neevo\Nette\CacheAdapter', array(ucfirst($this->prefix($c))));
+            ->setType('Neevo\Nette\CacheAdapter')
+            ->setFactory('Neevo\Nette\CacheAdapter', array(ucfirst($this->prefix($c))));
 
         // Manager
         $manager = $container->addDefinition($this->prefix('manager'))
-            ->setClass('Neevo\Manager', array($config, $this->prefix('@cache')));
+            ->setType('Neevo\Manager')
+            ->setFactory('Neevo\Manager', array($config, $this->prefix('@cache')));
 
         // Panel
         $panelName = 'Neevo-Nette-DebugPanel-' . ucfirst($this->name);
         $panel = $container->addDefinition($this->prefix('panel'))
-            ->setClass('Neevo\Nette\DebugPanel', array(ucfirst($this->name)))
+            ->setType('Neevo\Nette\DebugPanel')
+            ->setFactory('Neevo\Nette\DebugPanel', array(ucfirst($this->name)))
             ->addSetup('$service->setExplain(?)', array(!$container->parameters['productionMode']))
             ->addSetup('Tracy\Debugger::getBar()->addPanel(?, ?)', array('@self', $panelName))
             ->addSetup(
