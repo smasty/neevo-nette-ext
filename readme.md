@@ -13,7 +13,7 @@ Instructions
 ------------
 
 1.  Add the extension to your Composer configuration:
-	
+
 	```json
 	{
 		"require": {
@@ -22,18 +22,11 @@ Instructions
 	}
 	```
 
-2.  Register the Neevo compiler extension in your application bootstrap
-    (e.g. `app/bootstrap.php`):
-
-	```php
-	<?php
-	$configurator->onCompile[] = function($configurator, $compiler){
-		$compiler->addExtension('neevo', new Neevo\Nette\Extension);
-	};
-	```
-
-3.  Add a new section `neevo` to your config file (e.g. `app/config/config.neon`)
+2.  Add new sections to your config file (e.g. `app/config/config.neon`)
     and place there your Neevo configuration:
+
+		extensions:
+			neevo: Neevo\Nette\Extension
 
 		neevo:
 			driver: MySQLi
@@ -41,4 +34,4 @@ Instructions
 			password: ****
 			database: my_database
 
-4.  There is no step four.
+4.  There is no step three.
